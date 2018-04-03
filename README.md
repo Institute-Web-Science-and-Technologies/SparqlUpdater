@@ -16,7 +16,7 @@ The Pellet reasoner is absolutely required if you are trying to build the progra
 4. Maven  
 For anything else, there is an Apache Maven pom.xml configuration file provided in the repository that should automatically download any other required libraries. Keep in mind however that Pellet will have to be added externally to your local Maven configuration, and thus the pom.xml will likely need to be adjusted accordingly to reflect your installation.  
 
-# 4.2 Instructions #  
+# Instructions #  
 For simply running the distributed program, which should - in its basic form - just be a .jar file, you do not actually require anything else! However, keep in mind that not all ontology formats are supported; common OWL RDF should work fine for starters. If building from source, it is required to build Pellet first and foremost. In my case, the cloned Pellet directory then had a folder named ”dist/lib” which included .jar files for each Pellet module that I could import in Maven. The pom.xml reflects the local configuration on our system. This approach is somewhat clumsy. Pellet should also come with its own pom.xml files that could naturally be imported as well to build everything automatically along with our Sparql-Updater. There really are a variety of ways to do this. The important step remains importing the individual Pellet modules into Maven so that they can be used during the compilation process.  
 
 ## Usage ##
