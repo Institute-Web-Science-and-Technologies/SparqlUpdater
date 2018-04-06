@@ -1,5 +1,5 @@
 # SparqlUpdater
-An implementation of dependency-guide semantics and other semantics for SPARQL update.
+An implementation of dependency-guided semantics and other semantics for SPARQL update.
 
 ##  Installation directive: ##
 
