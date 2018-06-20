@@ -100,7 +100,7 @@ public class DependencyGuidedSemantics implements Semantics {
      * @param recursion_depth larger than 0 if recursive call of the filter method
      * @throws RuntimeException if can't load ontology from file
      */
-	public DependencyGuidedSemantics( String ontology_path, String original_update, int recursion_depth ) {
+    public DependencyGuidedSemantics( String ontology_path, String original_update, int recursion_depth ) {
         ontology_path_ = ontology_path;
         manager_ = OWLManager.createOWLOntologyManager();
         File file = new File( ontology_path );
@@ -115,7 +115,7 @@ public class DependencyGuidedSemantics implements Semantics {
 
         original_update_ = original_update;
         recursion_depth_ = recursion_depth;
-	}
+    }
 
     /**
      * @brief Recursively delete an axiom for which a dependency has been violated.
@@ -532,9 +532,6 @@ public class DependencyGuidedSemantics implements Semantics {
                 int count = ways_to_delete.containsKey( best_as_array.size() ) ? ways_to_delete.get( best_as_array.size() ) : 0;
                 ways_to_delete.put( best_as_array.size(), count + 1 );
             }
-
-            // Doesn't matter what is returned, won't be used. _stats_ matters and has been written to!
-            return new ArrayList< Implementation >();
         }
 
         return best_as_array;

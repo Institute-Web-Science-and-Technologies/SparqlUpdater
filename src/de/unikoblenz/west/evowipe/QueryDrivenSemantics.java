@@ -62,11 +62,11 @@ public class QueryDrivenSemantics implements Semantics {
      * @param method method to use for explanation (glass box/black box)
      * @param Ad Abox assertions for the result of asking CONSTRUCT P_d where P_w, P_d being the desired deletion from the SparQL input update
      */
-	public QueryDrivenSemantics( String ontology_path, String method, Set< OWLAxiom > Ad ) {
+    public QueryDrivenSemantics( String ontology_path, String method, Set< OWLAxiom > Ad ) {
         ontology_path_ = ontology_path;
         method_ = method;
         Ad_ = new HashSet< OWLAxiom >( Ad );
-	}
+    }
 
     /**
      * @brief Applies the query-driven semantics to hitting sets of axioms.

@@ -90,7 +90,7 @@ public class RigidSemantics implements Semantics {
      * @param original_update the original update to be performed by the system
      * @throws RuntimeException if can't load ontology from file
      */
-	public RigidSemantics( String ontology_path, String original_update ) {
+    public RigidSemantics( String ontology_path, String original_update ) {
         manager_ = OWLManager.createOWLOntologyManager();
         File file = new File( ontology_path );
         ontology_path_ = ontology_path;
@@ -103,14 +103,14 @@ public class RigidSemantics implements Semantics {
             throw new RuntimeException( "Could not create temporary OWL ontology: " + e );
         }
 
-		// Create a Jena ontology model backed by the Pellet reasoner; for running a SparqlDL construct query
-		// (note, the Pellet reasoner is required)
-		jena_m_ = ModelFactory.createOntologyModel( PelletReasonerFactory.THE_SPEC );
+        // Create a Jena ontology model backed by the Pellet reasoner; for running a SparqlDL construct query
+        // (note, the Pellet reasoner is required)
+        jena_m_ = ModelFactory.createOntologyModel( PelletReasonerFactory.THE_SPEC );
 
-		// Then read the data from the file into the ontology model
-		jena_m_.read( ontology_path );
+        // Then read the data from the file into the ontology model
+        jena_m_.read( ontology_path );
         original_update_ = original_update;
-	}
+    }
 
     /**
      * @brief Applies rigid semantics to hitting sets of axioms.

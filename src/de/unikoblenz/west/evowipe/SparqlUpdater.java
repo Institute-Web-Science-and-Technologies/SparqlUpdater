@@ -80,7 +80,7 @@ public class SparqlUpdater {
         query_arg.setRequired( false );
         options.addOption( query_arg );
 
-        Option sem_arg = new Option( "s", "semantics", true, "Semantics for choosing deletions/implementations. Options: custom, query_set, query_car, rigid, depend" );
+        Option sem_arg = new Option( "s", "semantics", true, "Semantics for choosing deletions/implementations. Options: custom, query_set, query_car, rigid, depend, rigdep" );
         sem_arg.setRequired( false );
         options.addOption( sem_arg );
 
@@ -177,11 +177,12 @@ public class SparqlUpdater {
 
             semantics = cmd.getOptionValue( "semantics", "query_car" ); // default is query-driven with maximum cardinality
 
-            if ( ( !semantics.equals( "query_set" ) && !semantics.equals( "query_car" ) && !semantics.equals( "rigid" ) && !semantics.equals( "custom" ) && !semantics.equals( "depend" ) ) || ( semantics.equals( "custom" ) && !c_provided ) ) {
+            if ( ( !semantics.equals( "query_set" ) && !semantics.equals( "query_car" ) && !semantics.equals( "rigid" ) && !semantics.equals( "custom" ) && !semantics.equals( "depend" ) && !semantics.equals( "rigdep" ) ) || ( semantics.equals( "custom" ) && !c_provided ) ) {
                 String message = new String( "--semantics option can be one of the following:\n" +
              "   -\"custom\" for semantics including insertion; requires -c1 max/meet -c2 max/meet as additional parameters\n" +
              "   -\"rigid\" for update semantics trying to minimize deletion of rigid concept assertions\n" +
              "   -\"depend\" for update semantics trying to minimize cascading deletions of concepts dependent on each other w.r.t. roles\n" +
+             "   -\"rigdep\" combines the behaviour of rigidity- and dependency-guided semantics\n" +
              "   -\"query_car\" for query-driven update semantics with maximum cardinality\n" +
              "   -\"query_set\" for query-driven update semantics with set inclusion" );
 

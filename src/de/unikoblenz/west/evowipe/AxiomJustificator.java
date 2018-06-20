@@ -114,9 +114,9 @@ public class AxiomJustificator extends Justificator {
             return_justifications.add( new Justification( justification ) );
         }
 
-        if ( SparqlUpdater.verbose_level > 0 ) {
-            Justification.print( return_justifications, axiom_ );
-        }
+        //if ( SparqlUpdater.verbose_level > 0 ) {
+            //Justification.print( return_justifications, axiom_ );
+        //}
 
         // We only consider ABox axioms for deletion. Therefore, we remove TBox and RBox assertions.
         // TODO if printing is not desired, this loop can be combined with the one above and the method used here can be removed within the Justification class.

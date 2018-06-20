@@ -187,6 +187,9 @@ public class SparqlUpdaterImpl {
         else if ( semantics_arg.equals( "depend" ) ) {
             semantics = new DependencyGuidedSemantics( ontology_path, update_as_string, 0 );
         }
+        else if ( semantics_arg.equals( "rigdep" ) ) {
+            semantics = new RigDepSemantics( ontology_path, update_as_string, 0 );
+        }
         else if ( semantics_arg.equals( "custom" ) ) {
             semantics = new CustomSemantics( ontology_path, method, custom1, custom2 );
         }
@@ -230,7 +233,7 @@ public class SparqlUpdaterImpl {
                     System.out.println( "Debug:" );
                     i.dbg_.printAxioms();
 
-                    if ( semantics_arg.equals( "depend" ) ) {
+                    if ( semantics_arg.equals( "depend" ) || semantics_arg.equals( "rigdep" ) ) {
                         System.out.println( "Cascaded deletions:" );
                         HittingSet< OWLAxiom > tmp = new HittingSet< OWLAxiom >( i.success_ );
                         tmp.printAxioms();
@@ -262,18 +265,13 @@ public class SparqlUpdaterImpl {
 
                 implementation = implementations.get( choice - 1 );
 
-                if ( semantics_arg.equals( "depend" ) ) {
+                if ( semantics_arg.equals( "depend" ) || semantics_arg.equals( "rigdep" ) ) {
                     // Cascaded deletions in _success__ formally belong to deletions, make sure our final output reflects that
                     implementation.del_.merge( implementation.success_ );
                 }
             }
             else if ( implementations.size() > 0 ) {
                 implementation = implementations.get( 0 );
-
-                if ( semantics_arg.equals( "depend" ) ) {
-                    // Cascaded deletions in _success__ formally belong to deletions, make sure our final output reflects that
-                    implementation.del_.merge( implementation.success_ );
-                }
             }
         }
 
@@ -282,6 +280,8 @@ public class SparqlUpdaterImpl {
         }
 
         if ( SparqlUpdater.verbose_level >= 0 ) {
+            System.out.println( "Cascading deletions: " );
+            printAxiomSet( implementation.success_ );
             System.out.println( "Chosen deletion: " );
             implementation.del_.printAxioms();
 
@@ -289,6 +289,11 @@ public class SparqlUpdaterImpl {
                 System.out.println( "Chosen debug: " );
                 implementation.dbg_.printAxioms();
             }
+        }
+
+        if ( semantics_arg.equals( "depend" ) || semantics_arg.equals( "rigdep" )  ) {
+            // Cascaded deletions in _success__ formally belong to deletions, make sure our final output reflects that
+            implementation.del_.merge( implementation.success_ );
         }
 
         if ( !SparqlUpdater.benchmark ) {
@@ -811,6 +816,9 @@ outer_: while ( stmts.hasNext() ) {
         StmtIterator stmts = model.listStatements();
         Set< Justification > all_justifications = new TreeSet < Justification >(); // the set of all justifications for any to-be-deleted assertion (use a TreeSet because the order of elements is important for hitting set computation).
 
+        //int pukcab = SparqlUpdater.verbose_level;
+        //SparqlUpdater.verbose_level = 0;
+
         while ( stmts.hasNext() ) {
             Statement stmt = stmts.next();
             AxiomJustificator justificator = new AxiomJustificator( stmt, ontology_path, max_explanations, method );
@@ -818,6 +826,8 @@ outer_: while ( stmts.hasNext() ) {
             Set< Justification > justifications = justificator.computeJustifications(); // NOTE THAT THIS WILL NOT CONTAIN TBOX-ASSERTIONS (i.e. subClassOf, sameAs, ...)
             all_justifications.addAll( justifications ); // merge with other sets of justifications
         }
+
+        //SparqlUpdater.verbose_level = pukcab;
 
         // Now, _all_justifications_ contains all justifications for any to-be-deleted assertion, the latter resulting from the RDF-Graph constructed by the query that was the result of transforming the SPARQL-DL update into a CONSTRUCT query.
         // Next, we should minimize this set of justifications, i.e. make it a set of root justifications.

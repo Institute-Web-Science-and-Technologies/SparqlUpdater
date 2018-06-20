@@ -64,7 +64,7 @@ public class CustomSemantics implements Semantics {
      * @param custom1 Semantics for choosing deletions
      * @param custom2 Semantics for choosing debuggings
      */
-	public CustomSemantics( String ontology_path, String method, String custom1, String custom2 ) {
+    public CustomSemantics( String ontology_path, String method, String custom1, String custom2 ) {
         ontology_path_ = ontology_path;
         method_ = method;
 
@@ -87,7 +87,7 @@ public class CustomSemantics implements Semantics {
         else {
             throw new IllegalArgumentException( "Custom2 argument " + custom2 + " is not valid!" );
         }
-	}
+    }
 
     /**
      * @brief Applies custom semantics.
